@@ -72,3 +72,14 @@ function displayData(result){
      resultsBox.innerHTML = "<ul>" + content.join('') + " </ul>"
 }
 
+resultsBox.addEventListener("input", e=>{
+    const value = e.target.value.toLowerCase();
+    productInfo.forEach(productName =>{
+        const isVisible = productName.name.toLowerCase().includes(value) || productName.price.includes(value)
+        productName.element.classList.toggle("hide", !isVisible)
+    })
+})
+
+// resultsBox.addEventListener("click", out =>{
+//     list = 
+// })
