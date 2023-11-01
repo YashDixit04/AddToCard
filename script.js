@@ -10,7 +10,7 @@ const total = document.querySelector(".total")
 const body = document.querySelector("body")
 const quantity = document.querySelector(".quantity")
 
-let product = [
+const product = [
     {
         id: 0,
         image: '1.png',
@@ -42,88 +42,33 @@ let product = [
         price: 2400
     }
 ]
-openShopping.addEventListener("click", () => {
-    body.classList.add("active")
-})
 
-closeShopping.addEventListener("click", () => {
-    body.classList.remove("active")
-})
+let productInfo =[]
 
-
+function inputData(){
+    return product.map(productName => productName.name);
+}
+console.log(inputData())
 
 
-
-
-const productName = [
-    "Nike", "Sky", "Neon", "Puma", "Astr"
-]
-
-let result = []
-
-inputBox.onkeyup = function () {
-
-    let input = inputBox.value;
-    if (input.length) {
-        result = productName.filter((keyword) => {
+inputBox.onkeyup = function(){
+    let result =[]
+    let input = inputBox.value
+    if (input.length){
+        result = inputData().filter((keyword)=>{
             return keyword.toLowerCase().includes(input.toLowerCase());
-
-        });
-        display(result);
-       
-        if (!result.length) {
-            resultsBox.innerHTML = '';
+        })
+        displayData(result);
+        if(!result.length){
+            resultsBox.innerHTML ="";
         }
     }
 }
-function display(result) {
-    const content = result.map((list) => {
-        return "<li onclick=selectInput(this)>" + list + "</li>";
-    });
-    resultsBox.innerHTML = "<ul>" + content.join('') + " </ul>"
-}
 
-
-function selectInput(list) {
-    inputBox.value = list.innerHTML;
-    resultsBox.innerHTML = "";
-}
-
-
-
-
-
-
-const categories = [...new Set(product.map((item) => {
-    return item
-}))]
-
-resultsBox.addEventListener('keyup', (e) => {
-    const searchData = e.target.value.toLoweCase()
-    const filterData = categories.filter((item) => {
-        return (
-            item.title.toLocalLowerCase().includes(searchData)
-        )
+function displayData(result){
+    const content = result.map((list)=>{
+        return  "<li onclick=selectInput(this)>" + list + "</li>";
     })
-    displayItem(filterData)
-})
-
-
-const initApp = () => {
-    product.map((value, key) => {
-        let newDiv = document.createElement("div")
-        newDiv.classList.add("item")
-        var { image, name, price } = resultsBox;
-
-        return (newDiv.innerHTML =
-            `
-                <img src ="images/${value.image}">
-                <div class="title">${value.name}</div>
-                <div class="price">${value.price.toLocaleString()}</div>
-                <button onclick="addToCard(${key})"Add To Card </button>
-            `
-        )
-    }).join('')
+     resultsBox.innerHTML = "<ul>" + content.join('') + " </ul>"
 }
 
-initApp()
